@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meter Run Quote Estimator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Generating your quote...</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>Meter Run Quote Estimator</h1>
+                <p class="subtitle">Fill out the form below to generate a custom quote. Select an existing customer or add a new one, select or add contact for customer, configure your meter run specifications, and generate a PDF quote instantly.</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <section class="card">
+                <h2>Customer & Job Information</h2>
+
+                <div class="form-group">
+                    <label for="customerSelect">Select Customer:</label>
+                    <select id="customerSelect">
+                        <option value="">-- Select a customer --</option>
+                        <option value="new">+ Add New Customer</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerName">Customer Name:</label>
+                    <input type="text" id="customerName" placeholder="Enter customer name">
+                </div>
+
+                <div id="contactSelectionSection" class="hidden">
+                    <div class="form-group">
+                        <label for="contactSelect">Contact Person:</label>
+                        <select id="contactSelect">
+                            <option value="">-- Select a contact --</option>
+                            <option value="new">+ Add New Contact</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="contactDetailsSection">
+                    <div class="form-group">
+                        <label for="contactName">Contact Name:</label>
+                        <input type="text" id="contactName" placeholder="Enter contact name">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="contactEmail">Contact Email:</label>
+                            <input type="email" id="contactEmail" placeholder="contact@company.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPhone">Contact Phone:</label>
+                            <input type="tel" id="contactPhone" placeholder="(555) 123-4567">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobLocation">Job Site / Location:</label>
+                    <input type="text" id="jobLocation" placeholder="Enter Job Site or Location Name">
+                </div>
+
+                <div id="saveButtons" class="hidden">
+                    <button id="saveCustomer" class="btn-save-customer">
+                        Save New Customer
+                    </button>
+                    <button id="saveContact" class="btn-save-customer hidden">
+                        Add Contact to Customer
+                    </button>
+                </div>
+
+                <div id="deleteCustomerButtons" class="hidden">
+                    <button id="deleteCustomer" class="btn-delete-customer">
+                        Delete Customer
+                    </button>
+                </div>
+                <div id="deleteContactButtons" class="hidden">
+                    <button id="deleteContact" class="btn-delete-customer">
+                        Delete Contact
+                    </button>
+                </div>
+
+            </section>
+
+            <section class="card">
+                <h2>Recent Quotes</h2>
+                <div class="form-group">
+                    <label for="recentQuotes">Load a recent quote:</label>
+                    <select id="recentQuotes">
+                        <option value="">-- Select a recent quote --</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Meter Run Specifications</h2>
+                
+                <div class="specs-grid">
+                    <div class="form-group">
+                        <label for="schedule">Schedule:</label>
+                        <select id="schedule">
+                            <option value="">-- Select --</option>
+                            <option value="40">40</option>
+                            <option value="80">80</option>
+                            <option value="160">160</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="size">Size:</label>
+                        <select id="size">
+                            <option value="">-- Select --</option>
+                            <option value="2">2"</option>
+                            <option value="3">3"</option>
+                            <option value="4">4"</option>
+                            <option value="6">6"</option>
+                            <option value="8">8"</option>
+                            <option value="10">10"</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orificeType">Orifice Type:</label>
+                        <select id="orificeType">
+                            <option value="">-- Select --</option>
+                            <option value="senior">Senior</option>
+                            <option value="simplex">Simplex</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vendor">Vendor:</label>
+                        <select id="vendor">
+                            <option value="">-- Select --</option>
+                            <option value="canalta">Canalta</option>
+                            <option value="daniels">Daniels</option>
+                            <option value="tmco">TMCO</option>
+                            <option value="rj">RJ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="configuration">Configuration:</label>
+                    <select id="configuration">
+                        <option value="">-- Select Configuration --</option>
+                        <option value="2-piece">2-Piece (with Pin-Type Flow Conditioner)</option>
+                        <option value="3-piece">3-Piece (with Flange-Type Flow Conditioner)</option>
+                    </select>
+                </div>
+
+                <div id="pinTypeSection" class="hidden">
+                    <div class="specs-grid-2col">
+                        <div class="form-group">
+                            <label for="pinConditionerBrand">Pin Conditioner Brand:</label>
+                            <select id="pinConditionerBrand">
+                                <option value="">-- Select --</option>
+                                <option value="rj">RJ</option>
+                                <option value="canalta">Canalta</option>
+                                <option value="daniels">Daniels</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pinConditionerType">Pattern:</label>
+                            <select id="pinConditionerType">
+                                <option value="">-- Select --</option>
+                                <option value="regular">Regular</option>
+                                <option value="long_pattern">Long Pattern</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="flangeTypeSection" class="hidden">
+                    <div class="form-group">
+                        <label for="flangeConditionerBrand">Flange Conditioner Brand:</label>
+                        <select id="flangeConditionerBrand">
+                            <option value="">-- Select --</option>
+                            <option value="rj">RJ</option>
+                            <option value="canalta">Canalta</option>
+                            <option value="daniels">Daniels</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="specs-grid-3col">
+                    <div class="form-group">
+                        <label for="flangeRating">Flange Rating:</label>
+                        <select id="flangeRating">
+                            <option value="">-- Select --</option>
+                            <option value="150">150#</option>
+                            <option value="300">300#</option>
+                            <option value="600">600#</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="flangeBrand">Flange Brand:</label>
+                        <select id="flangeBrand">
+                            <option value="">-- Select --</option>
+                            <option value="rj">RJ</option>
+                            <option value="canalta">Canalta</option>
+                            <option value="daniels">Daniels</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="flangeQuantity">Flange Quantity:</label>
+                        <input type="number" id="flangeQuantity" min="0" value="0">
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Component Quantities</h2>
+
+                <div class="quantities-grid">
+                    <div class="form-group">
+                        <label for="pipeLength">Pipe (feet):</label>
+                        <input type="number" id="pipeLength" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="tolsHalfInch">1/2" TOLs:</label>
+                        <input type="number" id="tolsHalfInch" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="tolsThreeQuarterInch">3/4" TOLs:</label>
+                        <input type="number" id="tolsThreeQuarterInch" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="tolsOneInch">1" TOLs:</label>
+                        <input type="number" id="tolsOneInch" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="companionFlangeQuantity">Companion Flange 600#:</label>
+                        <input type="number" id="companionFlangeQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="studsQuantity">Studs:</label>
+                        <input type="number" id="studsQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="hexQuantity">Hex:</label>
+                        <input type="number" id="hexQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="gasketsQuantity">Gaskets:</label>
+                        <input type="number" id="gasketsQuantity" min="0" value="0">
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Accessories</h2>
+
+                <div class="accessory-grid">
+                    <div class="form-group">
+                        <label for="tapValvesQuantity">Tap Valves:</label>
+                        <input type="number" id="tapValvesQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="sampleProbeQuantity">Sample Probe:</label>
+                        <input type="number" id="sampleProbeQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="thermowellQuantity">Thermowell:</label>
+                        <input type="number" id="thermowellQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="testWellQuantity">Test Well:</label>
+                        <input type="number" id="testWellQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="outerEndValvesQuantity">Outer End Valves:</label>
+                        <input type="number" id="outerEndValvesQuantity" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="checkValvesQuantity">Check Valves:</label>
+                        <input type="number" id="checkValvesQuantity" min="0" value="0">
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Finishing (Labor @ $55/hr)</h2>
+
+                <div class="finishing-grid">
+                    <div class="form-group">
+                        <label for="grindingHours">Grinding:</label>
+                        <input type="number" id="grindingHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="micHours">Mic:</label>
+                        <input type="number" id="micHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="assemblyHours">Assembly:</label>
+                        <input type="number" id="assemblyHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="hydroHours">Hydro/ Hone/ Oil:</label>
+                        <input type="number" id="hydroHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="prepPaintHours">Prep Paint:</label>
+                        <input type="number" id="prepPaintHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="paintPrimerHours">Paint/ Primer:</label>
+                        <input type="number" id="paintPrimerHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="laborPaintHours">Labor Paint:</label>
+                        <input type="number" id="laborPaintHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="dressOutHours">Dress Out/ Storage:</label>
+                        <input type="number" id="dressOutHours" min="0" step="0.5" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="weldingLaborCost">Welding/ Labor Cost:</label>
+                        <input type="number" id="weldingLaborCost" min="0" step="0.01" value="0">
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2>Additional Options</h2>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="option_sandblasting" value="sandblasting">
+                        Sandblasting
+                    </label>
+                    <label>
+                        <input type="checkbox" id="option_xray" value="xray">
+                        X-Ray
+                    </label>
+                    <label>
+                        <input type="checkbox" id="option_mtr" value="mtr">
+                        MTR
+                    </label>
+                    <label>
+                        <input type="checkbox" id="option_hydro" value="hydro">
+                        Hydro (4 Hours)
+                    </label>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Meter Run Quantity:</label>
+                        <input type="number" id="quantity" min="1" max="1" value="1" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="markup">Markup:</label>
+                        <select id="markup">
+                            <option value="">-- Select Markup --</option>
+                            <option value="markup1">28% Markup</option>
+                            <option value="markup2">30% Markup</option>
+                            <option value="markup3">32% Markup</option>
+                            <option value="markup4">35% Markup</option>
+                            <option value="markup5">40% Markup</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Additional Notes:</label>
+                    <textarea id="notes" rows="6" placeholder="Any special requirements or notes..."></textarea>
+                </div>
+            </section>
+        </div>
+
+        <section class="card price-summary">
+            <h2>Price Summary</h2>
+            <div class="price-breakdown">
+                <div class="price-row">
+                    <span>Base Price:</span>
+                    <span id="basePrice">$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span>Additional Options:</span>
+                    <span id="optionsPrice">$0.00</span>
+                </div>
+                <div class="price-row subtotal">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="price-row">
+                    <span id="markupLabel">Markup:</span>
+                    <span id="markupPrice">$0.00</span>
+                </div>
+                <div class="price-row total">
+                    <span>Total:</span>
+                    <span id="totalPrice">$0.00</span>
+                </div>
+            </div>
+            <div class="button-group">
+                <button id="clearForm" class="btn-secondary">Clear Form</button>
+                <button id="generateQuote" class="btn-primary">Generate Quote</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Quote Estimator Tool &mdash; a portfolio project built with vanilla HTML, CSS &amp; JavaScript by Austin Watson.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="data/pricing.js"></script>
+    <script src="data/customers.js"></script>
+    <script src="data/quotes.js"></script>
+    <script src="script.js"></script>
+    <script src="pdf-generator.js"></script>
+</body>
+</html>
