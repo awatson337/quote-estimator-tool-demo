@@ -1,5 +1,11 @@
 # Quote Estimator Tool
 
+## About this project
+
+This is a demo version of a quote estimator tool I originally built for a previous employer. 
+I've cleaned it up and removed any company-specific data before sharing it here. The pricing 
+and customer data shown are placeholder values, not real business information.  
+
 **[Live Demo →](https://quote-estimator-tool-demo.vercel.app/)**
 
 A client-side quote estimator built for a real-world use case: configuring a multi-variable product (vendor, size, materials, labor, add-ons), calculating a price in real time, and generating a branded PDF quote.
